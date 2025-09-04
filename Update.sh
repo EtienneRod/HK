@@ -33,7 +33,7 @@ fi
 /usr/bin/echo "--------";
 /usr/bin/echo "Updating CTs";
 /usr/bin/echo "--------";
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs-cron.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs.sh)";
 
 # Modify log owner
 /usr/bin/echo "Modifying log owner";
