@@ -1,15 +1,19 @@
 #/bin/bash
 
+# Set temporary PATH
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+export PATH="$PATH:test";
+
 # Dedup /mnt/Share/Medias/Pictures
-/usr/bin/echo "Deduping /mnt/Share/Medias/Pictures";
-/usr/bin/duperemove -r -d /mnt/Share/Medias/Pictures;
+echo "Deduping /mnt/Share/Medias/Pictures";
+duperemove -r -d /mnt/Share/Medias/Pictures;
 
 # Scrub Data and Metadata to make sure data is not corrupted
-/usr/bin/echo "Scrubing Data and Metadata";
-/usr/bin/btrfs scrub start -Bq /mnt/Share;
+echo "Scrubing Data and Metadata";
+btrfs scrub start -Bq /mnt/Share;
 
 # Modify Backup.log owner
-/usr/bin/echo "Modifying log owner";
-/usr/bin/chown Etienne:Etienne /home/Etienne/HK/*.log;
+echo "Modifying log owner";
+chown Etienne:Etienne /home/Etienne/HK/*.log;
 
 exit 0;
