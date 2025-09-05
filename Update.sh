@@ -1,5 +1,9 @@
 #!/bin/bash
-#/bin/bash
+
+# Set temporary PATH
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+export PATH="$PATH:test";
+
 # Load sensitives info from variables.env in order to not hardcode them in files push to GitHub
 # Variable list
   # $pushoverapikey
@@ -11,32 +15,32 @@ userkey=$pushoverusername
 url="https://api.pushover.net/1/messages.json"
 message="";
 
-/usr/bin/echo "--------";
-/usr/bin/echo "Updating "$(hostname);
-/usr/bin/echo "--------";
+echo "--------";
+echo "Updating "$(hostname);
+echo "--------";
 message="";
-/usr/bin/apt update && /usr/bin/apt -y dist-upgrade && /usr/bin/apt -y dist-upgrade;
+apt update && apt -y dist-upgrade && apt -y dist-upgrade;
 needrestartoutput=$(/usr/sbin/needrestart -r l -p)
 if [[ $needrestartoutput =~ "CRIT - " ]]; then
   message=$(hostname)" - Restart needed after updates - $needrestartoutput";
 fi
-/usr/bin/echo "message=$message";
+echo "message=$message";
 if [ -n "$message" ]; then
-  /usr/bin/curl -s \
+  curl -s \
     --form-string "token=${appkey}" --form-string "user=${userkey}" \
     --form-string "title=Monitoring" \
     --form-string "message=${message}" \
     $url
 fi
-/usr/bin/apt autoremove -y;
+apt autoremove -y;
 
-/usr/bin/echo "--------";
-/usr/bin/echo "Updating CTs";
-/usr/bin/echo "--------";
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs.sh)";
+echo "--------";
+echo "Updating CTs";
+echo "--------";
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs.sh)";
 
 # Modify log owner
-/usr/bin/echo "Modifying log owner";
-/usr/bin/chown Etienne:Etienne /home/Etienne/HK/*.log;
+echo "Modifying log owner";
+chown Etienne:Etienne /home/Etienne/HK/*.log;
 
 exit 0;
