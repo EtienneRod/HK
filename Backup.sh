@@ -8,15 +8,15 @@ RetentionDays=14
 
 # Backup OPNSENSEs latest config files
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub Etienne@OPNSENSE001 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-backupfilename=$(/bin/ls -Art /conf/backup | tail -n 1) && /bin/echo $backupfilename && /usr/local/bin/sudo /usr/local/bin/scp -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub \
-/conf/backup/$backupfilename Etienne@NAS:/mnt/Share/Configurations/OPNSENSE/OPNSENSE001.xml;'
+backupfilename=$(/bin/ls -Art /conf/backup | tail -n 1) && echo $backupfilename && sudo scp -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub \
+/conf/backup/$backupfilename Etienne@NAS:/mnt/Share/Configurations/OPNSENSE/OPNSENSE001.xml;';
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub Etienne@OPNSENSE002 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-backupfilename=$(/bin/ls -Art /conf/backup | tail -n 1) && /bin/echo $backupfilename && /usr/local/bin/sudo /usr/local/bin/scp -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub \
-/conf/backup/$backupfilename Etienne@NAS:/mnt/Share/Configurations/OPNSENSE/OPNSENSE002.xml;'
-chown -R Etienne:Etienne /mnt/Share/Configurations/OPNSENSE;
+backupfilename=$(/bin/ls -Art /conf/backup | tail -n 1) && echo $backupfilename && sudo scp -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub \
+/conf/backup/$backupfilename Etienne@NAS:/mnt/Share/Configurations/OPNSENSE/OPNSENSE002.xml;';
+bash -c "chown -R Etienne:Etienne /mnt/Share/Configurations/OPNSENSE";
 
 # Remove Old SWG001 Backups
-find /mnt/Share/Configurations/SWG001/ -type f -iname "*_juniper.conf.gz" -mtime +30 -delete;
+find /mnt/Share/Configurations/SWG001/ -type f -iname \"*_juniper.conf.gz\" -mtime +30 -delete;
 
 # Backup APs
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /home/Etienne/.ssh/id_rsa.pub root@AP1 sysupgrade --create-backup /tmp/AP1_OpenWRT_backup.tar.gz;
