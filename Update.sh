@@ -34,10 +34,10 @@ if [ -n "$message" ]; then
 fi
 apt autoremove -y;
 
-echo "--------";
-echo "Updating CTs";
-echo "--------";
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs.sh)";
+/usr/bin/echo "--------";
+/usr/bin/echo "Updating CTs";
+/usr/bin/echo "--------";
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/update-lxcs-cron.sh)";
 
 # Modify log owner
 echo "Modifying log owner";
